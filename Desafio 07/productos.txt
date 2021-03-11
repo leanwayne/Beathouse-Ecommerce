@@ -1,0 +1,1 @@
+[{"title":"mancuera","price":12000,"thumbnail":"foto","id":1},{"title":"barra de acero","price":15000,"thumbnail":"foto","id":2},{"title":"disco 20kg","price":8000,"thumbnail":"foto","id":3}]
