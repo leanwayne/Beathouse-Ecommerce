@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "dev": "node_modules/.bin/nodemon handler.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.0.0-beta3",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "moment": "^2.29.1",
+    "multer": "^1.4.2",
+    "path": "^0.12.7"
+  }
+}
