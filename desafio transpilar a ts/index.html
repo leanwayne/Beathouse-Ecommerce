@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./cliente.js"></script>
+    <title>Productos</title>
+</head>
+<body>
+    <form action="/api/productos/guardar" enctype="application/x-www-form-urlencoded" method="POST">
+        <h3 class="title">New product</h3>
+        <div>
+            <label for="title">Title</label>
+            <input class="input" type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input class="input" type="number" id="price" name="price" required>
+        </div>
+        <div>
+            <label for="thumbnail">Thumbnail</label>
+            <input class="input" type="text" id="thumbnail" name="thumbnail" required>
+        </div>
+        <input class="btn" type="submit" value="Save product">
+    </form>
+
+    <style>
+        body {
+            background-color: #f7f9fc;
+        }
+        .title {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 28px;
+            margin: 0 0 25px;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 30px 35px;
+            max-width: 450px;
+            margin: 50px auto 0 auto;
+            box-shadow: 0 4px 10px rgb(90 107 150 / 5%);
+        }
+        div {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .input {
+            font-weight: 500;
+            padding: 0 20px;
+            height: 55px;
+            width: 100%;
+            border-radius: 12px;
+            background: #fff;
+            border: 2px solid #dde2ee;
+            outline: none;
+        }
+        .btn {
+            height: 50px;
+            padding: 0 50px;
+            border: none;
+            background: #316cec;
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+            text-transform: uppercase;
+        }
+    </style>
+    
+</body>
+</html>
