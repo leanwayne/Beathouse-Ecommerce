@@ -1,0 +1,1 @@
+[{"nombre":"ggggg","precio":20,"descripcion":"sin descripcion","codigo":"15/04/2021 01:04:05","foto":"ddddddd","stock":20,"timestamp":"15/04/2021 01:04:06","id":"1"}]
