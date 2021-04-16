@@ -1,1 +1,1 @@
-[{"id":"1","timestamp":"15/04/2021 01:04:25","producto":{"nombre":"ggggg","precio":20,"descripcion":"sin descripcion","codigo":"15/04/2021 01:04:05","foto":"ddddddd","stock":20,"timestamp":"15/04/2021 01:04:06","id":"1"}}]
+[{"id":"1","timestamp":"16/04/2021 15:04:12","producto":{"nombre":"LLLLLLLLLLL","precio":20,"descripcion":"sin descripcion","codigo":"16/04/2021 14:04:17","foto":"ddddddd","stock":20,"timestamp":"16/04/2021 14:04:17","id":"1"}}]
