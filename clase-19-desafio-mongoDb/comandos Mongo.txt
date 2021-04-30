@@ -1,0 +1,144 @@
+use ecommerce
+switched to db ecommerce
+db
+ecommerce
+1)
+db.productos.insertMany([
+  { "nombre": "pantalon", "descripcion": "se pone en las piernas", "precio": 100, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "remera", "descripcion": "se pone en el cuerpo", "precio": 3698, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "campera", "descripcion": "es linda", "precio": 456, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "pulsera", "descripcion": "son re feas", "precio": 1236, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "reloj", "descripcion": "no funciona", "precio": 5000, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "gorra", "descripcion": "estan rotas", "precio": 956, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "lente", "descripcion": "lente de que?", "precio": 254, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "aro", "descripcion": "un aro para dominarlos a todos", "precio": 1236, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "collar", "descripcion": "re lindo el collar este", "precio": 6661, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+  { "nombre": "moño", "descripcion": "un moño re L-gante keloke", "precio": 4536, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" },
+]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("608a3088f46db9af5420a163"),
+                ObjectId("608a3088f46db9af5420a164"),
+                ObjectId("608a3088f46db9af5420a165"),
+                ObjectId("608a3088f46db9af5420a166"),
+                ObjectId("608a3088f46db9af5420a167"),
+                ObjectId("608a3088f46db9af5420a168"),
+                ObjectId("608a3088f46db9af5420a169"),
+                ObjectId("608a3088f46db9af5420a16a"),
+                ObjectId("608a3088f46db9af5420a16b"),
+                ObjectId("608a3088f46db9af5420a16c")
+        ]
+}
+
+db.mensajes.insertMany([
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+    { "email": "sarasa@sarasa.com", "timestamp": "DD/MM/YYYY", "mensaje": "este es un mensaje de prueba" },
+  ]);
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("608a30d3f46db9af5420a16d"),
+                ObjectId("608a30d3f46db9af5420a16e"),
+                ObjectId("608a30d3f46db9af5420a16f"),
+                ObjectId("608a30d3f46db9af5420a170"),
+                ObjectId("608a30d3f46db9af5420a171"),
+                ObjectId("608a30d3f46db9af5420a172"),
+                ObjectId("608a30d3f46db9af5420a173"),
+                ObjectId("608a30d3f46db9af5420a174"),
+                ObjectId("608a30d3f46db9af5420a175"),
+                ObjectId("608a30d3f46db9af5420a176")
+        ]
+}
+
+2)
+db.productos.find()
+{ "_id" : ObjectId("608a3088f46db9af5420a163"), "nombre" : "pantalon", "descripcion" : "se pone en las piernas", "precio" : 100, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a164"), "nombre" : "remera", "descripcion" : "se pone en el cuerpo", "precio" : 3698, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a165"), "nombre" : "campera", "descripcion" : "es linda", "precio" : 456, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a166"), "nombre" : "pulsera", "descripcion" : "son re feas", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a167"), "nombre" : "reloj", "descripcion" : "no funciona", "precio" : 5000, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a168"), "nombre" : "gorra", "descripcion" : "estan rotas", "precio" : 956, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a169"), "nombre" : "lente", "descripcion" : "lente de que?", "precio" : 254, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16a"), "nombre" : "aro", "descripcion" : "un aro para dominarlos a todos", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16b"), "nombre" : "collar", "descripcion" : "re lindo el collar este", "precio" : 6661, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16c"), "nombre" : "mo├▒o", "descripcion" : "un mo├▒o re L-gante keloke", "precio" : 4536, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+
+db.mensajes.find()
+{ "_id" : ObjectId("608a30d3f46db9af5420a16d"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a16e"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a16f"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a170"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a171"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a172"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a173"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a174"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a175"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+{ "_id" : ObjectId("608a30d3f46db9af5420a176"), "email" : "sarasa@sarasa.com", "timestamp" : "DD/MM/YYYY", "mensaje" : "este es un mensaje de prueba" }
+
+
+db.productos.insertOne({ "nombre": "Poncho", "descripcion": "es un re PONCHO", "precio": 4999, "foto": "Harina", "codigo": "ABj23Z", "timestamp": "DD/MM/YYYY" })
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("608a41f6f46db9af5420a177")
+}
+
+db.productos.find({ "precio": {$lt: 1000 }})
+{ "_id" : ObjectId("608a3088f46db9af5420a163"), "nombre" : "pantalon", "descripcion" : "se pone en las piernas", "precio" : 100, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a165"), "nombre" : "campera", "descripcion" : "es linda", "precio" : 456, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a168"), "nombre" : "gorra", "descripcion" : "estan rotas", "precio" : 956, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a169"), "nombre" : "lente", "descripcion" : "lente de que?", "precio" : 254, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+
+db.productos.find( {$and: [{"precio": {$lt: 3000}}, {"precio": {$gt: 1000}}]})
+{ "_id" : ObjectId("608a3088f46db9af5420a166"), "nombre" : "pulsera", "descripcion" : "son re feas", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16a"), "nombre" : "aro", "descripcion" : "un aro para dominarlos a todos", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+
+db.productos.find( { "precio": {$gt: 3000}})
+{ "_id" : ObjectId("608a3088f46db9af5420a164"), "nombre" : "remera", "descripcion" : "se pone en el cuerpo", "precio" : 3698, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a167"), "nombre" : "reloj", "descripcion" : "no funciona", "precio" : 5000, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16b"), "nombre" : "collar", "descripcion" : "re lindo el collar este", "precio" : 6661, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a3088f46db9af5420a16c"), "nombre" : "mo├▒o", "descripcion" : "un mo├▒o re L-gante keloke", "precio" : 4536, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+{ "_id" : ObjectId("608a41f6f46db9af5420a177"), "nombre" : "Poncho", "descripcion" : "es un re PONCHO", "precio" : 4999, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+
+db.productos.find({}).sort({"precio":1}).skip(2).limit(1)
+{ "_id" : ObjectId("608a3088f46db9af5420a165"), "nombre" : "campera", "descripcion" : "es linda", "precio" : 456, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY" }
+
+db.productos.aggregate([{$addFields: {"stock": 100}}])
+{ "_id" : ObjectId("608a3088f46db9af5420a163"), "nombre" : "pantalon", "descripcion" : "se pone en las piernas", "precio" : 100, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a164"), "nombre" : "remera", "descripcion" : "se pone en el cuerpo", "precio" : 3698, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a165"), "nombre" : "campera", "descripcion" : "es linda", "precio" : 456, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a166"), "nombre" : "pulsera", "descripcion" : "son re feas", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a167"), "nombre" : "reloj", "descripcion" : "no funciona", "precio" : 5000, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a168"), "nombre" : "gorra", "descripcion" : "estan rotas", "precio" : 956, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a169"), "nombre" : "lente", "descripcion" : "lente de que?", "precio" : 254, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a16a"), "nombre" : "aro", "descripcion" : "un aro para dominarlos a todos", "precio" : 1236, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a16b"), "nombre" : "collar", "descripcion" : "re lindo el collar este", "precio" : 6661, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a3088f46db9af5420a16c"), "nombre" : "mo├▒o", "descripcion" : "un mo├▒o re L-gante keloke", "precio" : 4536, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+{ "_id" : ObjectId("608a41f6f46db9af5420a177"), "nombre" : "Poncho", "descripcion" : "es un re PONCHO", "precio" : 4999, "foto" : "Harina", "codigo" : "ABj23Z", "timestamp" : "DD/MM/YYYY", "stock" : 100 }
+
+db.productos.update({"precio": {$gt: 4000}}, {$set: {"stock": 0}}, {"multi" : true})
+WriteResult({ "nMatched" : 4, "nUpserted" : 0, "nModified" : 4 })
+
+db.productos.deleteMany({"precio" : {$lt: 1000}})
+{ "acknowledged" : true, "deletedCount" : 4 }
+
+db.createUser({"user": "pepe", "pwd": "asd456", roles:[{"role": "read", db: "ecommerce"}]})
+Successfully added user: {
+        "user" : "pepe",
+        "roles" : [
+                {
+                        "role" : "read",
+                        "db" : "ecommerce"
+                }
+        ]
+}
+
+
