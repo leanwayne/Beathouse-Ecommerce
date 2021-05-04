@@ -1,0 +1,51 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Express websockets</title>
+</head>
+<body>
+    {{{ body }}}
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://unpkg.com/moment"></script>
+    <script>
+    var socket = io();
+ //productos*****************************************************************************************************************************   
+  
+//chat***************************************************************************************************************************
+    let formMensajes = document.getElementById("form-mensajes")
+    let email = document.getElementById("email")
+    let mensaje = document.getElementById("mensaje")
+    let messageList = document.getElementById("lista-mensajes")
+
+    formMensajes.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if(email.value && mensaje.value) {
+            let message = {
+                email: email.value, 
+                timestamp: moment().format('DD/MM/YYYY HH:MM:SS'), 
+                mensaje: mensaje.value 
+            }
+            socket.emit('client-mensaje', message);
+            mensaje.value = '';
+            console.log("mensaje servidor",message)
+        }                 
+
+    })
+
+    socket.on('server-mensaje', (message) =>{
+        console.log("mensaje servidor",message)
+        let item = document.createElement('li')
+        item.innerHTML = `<strong style="color:blue">${message.email} </strong>` +
+            `<span style="color:brown">[ ${message.timestamp} ] : </span>` +
+            `<em style="color:green">${message.mensaje}</em>`;
+        messageList.appendChild(item)
+    })
+
+    </script>
+</body>
+</html>
