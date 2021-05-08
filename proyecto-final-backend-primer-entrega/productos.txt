@@ -1,1 +1,0 @@
-[{"nombre":"ggggg","precio":20,"descripcion":"sin descripcion","codigo":"16/04/2021 14:04:84","foto":"ddddddd","stock":20,"timestamp":"16/04/2021 14:04:84","id":"2"},{"nombre":"LLLLLLLLLLL","precio":20,"descripcion":"sin descripcion","codigo":"16/04/2021 14:04:17","foto":"ddddddd","stock":20,"timestamp":"16/04/2021 14:04:17","id":"1"}]
