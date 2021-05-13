@@ -5,6 +5,7 @@
   "main": "server.js",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.1",
     "faker": "^5.5.3",
@@ -20,6 +21,11 @@
     "nodemon": "^2.0.7"
   },
   "scripts": {
+    "dev": "nodemon server.js",
+    "startFileSystem": "cross-env process.env.db=fileSystem nodemon server.js",
+    "startMongodb": "cross-env process.env.db=MongoDb nodemon server.js",
+    "startMongoAtlas": "cross-env process.env.db=MongoAtlas nodemon server.js",
+    "startSqLite": "cross-env process.env.db=SqLite nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

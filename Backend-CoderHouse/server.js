@@ -14,7 +14,6 @@ app.use(cors());
 const {mensajesDB} = require("./optionsSqLite/sqLiteOptions");
 const knex = require("knex")(mensajesDB)
 const model = require("./models/modelSchema")
-
 //handlebars----------------------------------------------------------
 app.engine(
   "hbs",
@@ -31,17 +30,19 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //------------------------------------------------------------------------
-knex.schema.hasTable('mensajes').then(exists =>{
-  if (!exists) {
-    return knex.schema.createTable('mensajes', table => {
-      table.string('email', 100);
-      table.string('timestamp', 50);  
-      table.string('mensaje');
-    });
-  }else{
-    console.log("Trabajando con DB mensajes") 
-  }
-})
+if(process.env.db === "SqLite"){  
+  knex.schema.hasTable('mensajes').then(exists =>{
+    if (!exists) {
+      return knex.schema.createTable('mensajes', table => {
+        table.string('email', 100);
+        table.string('timestamp', 50);  
+        table.string('mensaje');
+      });
+    }else{
+      console.log("Trabajando con DB mensajes") 
+    }
+  })
+}
 //socket-------------------------------------------------------------------------------------------------------
 let listaMensajes = [];
 io.on("connection", (socket) => {
@@ -55,22 +56,44 @@ io.on("connection", (socket) => {
     listaMensajes.push(messageFile);
     console.log("listamentajes", listaMensajes)
         //SqLite----------------------------------------------------------------------------------------
-        knex("mensajes").insert(messageFile)
-        .then( () => {console.log("mensaje guardado")})
-        .catch( e => {console.log(e); throw e;})
+        if(process.env.db === "SqLite"){  
+          knex("mensajes").insert(messageFile)
+          .then( () => {console.log("mensaje guardado")})
+          .catch( e => {console.log(e); throw e;})
+        } 
         //SqLite----------------------------------------------------------------------------------------
     try {
-      await fs.promises.writeFile(
-        "messages.txt",
-        JSON.stringify(listaMensajes)
-      );
-      await model.mensajes.insertMany(messageFile)//MongoDB--
+      if(process.env.db === "fileSystem"){  
+        await fs.promises.writeFile(
+          "messages.txt",
+          JSON.stringify(listaMensajes)
+        );
+      }
+      if(process.env.db === "MongoDb"){  
+        await model.mensajes.insertMany(messageFile)//MongoDB--
+      }  
     } catch (err) {
       console.log("Error de escritura", err.error);
     }
   });
 });
 //socket-------------------------------------------------------------------------------------------------------
+switch (process.env.db) {
+  case 'fileSystem':
+    console.log('Utilizando la DataBase FileSystem');
+    break;
+  case 'SqLite':
+    console.log('Utilizando la DataBase SqLite');
+    break;
+  case 'MongoDb':
+    console.log('Utilizando la DataBase MongoDb');
+    break;
+  case 'MongoAtlas':
+    console.log('Utilizando la DataBase MongoAtlas');
+    break;
+  default:
+    console.log('estas usando todas las bases de datos a la vez (no es recomendable)');
+}
 //form
 app.get("/", (req, res) => {
   res.render("index", {  
