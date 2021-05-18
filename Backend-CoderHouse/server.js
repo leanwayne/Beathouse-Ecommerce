@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session")
 const app = express();
 require('./optionsMongo/mongoOptions')
 const fs = require("fs");
@@ -14,6 +15,18 @@ app.use(cors());
 const {mensajesDB} = require("./optionsSqLite/sqLiteOptions");
 const knex = require("knex")(mensajesDB)
 const model = require("./models/modelSchema")
+const cookieParser = require("cookie-parser")
+app.use(cookieParser())
+//Session Setup
+app.use(session({
+    secret: 'shhh',
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+        maxAge: 15000
+    }
+}))
 //handlebars----------------------------------------------------------
 app.engine(
   "hbs",

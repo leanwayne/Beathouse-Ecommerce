@@ -26,7 +26,7 @@ module.exports = {
    agregarProducto: async (req, res) => {
     let fileSystem = undefined
     let listaProductos = []
-     if (!req.body.nombre && !req.body.precio && !req.body.foto) {
+     if (!isProduct(req.body)) {
        return res.status(400).send("Error en los parametros");
      }
      let product = {
@@ -69,12 +69,10 @@ module.exports = {
   listarProductos: async (req, res) => {
     let fileSystem = undefined
     let listaProductos = []
-    console.log("listarproductos =", listaProductos)
     if(process.env.db === "fileSystem"){
       fileSystem = fs.readFileSync("productos.txt", "utf-8");
       listaProductos = JSON.parse(fileSystem);
     }  
-    console.log("listarproductos =", listaProductos)
 //SqLite----------------------------------------------------------------------------------------
     if(process.env.db === "SqLite"){  
       knex.from("productos").select("*")
@@ -85,12 +83,13 @@ module.exports = {
       })
       .catch( e => { console.log(e); throw e;})
     }
-//SqLite---------------------------------------------------------------------------------------- 
+//SqLite----------------------------------------------------------------------------------------
+    let respuesta = undefined
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){ 
-      const respuesta = await model.productos.find({}).sort({nombre: 1}); //MongoDB-----
+      respuesta = await model.productos.find({}).sort({nombre: 1}); //MongoDB-----
       console.log("lista productos de Mongo:", respuesta)
     }
-    res.status(200).json(listaProductos);
+    res.status(200).json(respuesta);
   },
 
   obtenerProductoPorId: async (req, res) => {
