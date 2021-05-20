@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session")
+const cookieParser = require("cookie-parser")
 const app = express();
 require('./optionsMongo/mongoOptions')
 const fs = require("fs");
@@ -11,11 +12,10 @@ var cors = require("cors");
 const path = require("path");
 const rutaProductos = require("./routes/productosRouter");
 const rutaCarrito = require("./routes/carritoRouter");
-app.use(cors());
+app.use(cors({origin:'http://localhost:3000',credentials:true}));
 const {mensajesDB} = require("./optionsSqLite/sqLiteOptions");
 const knex = require("knex")(mensajesDB)
 const model = require("./models/modelSchema")
-const cookieParser = require("cookie-parser")
 app.use(cookieParser())
 //Session Setup
 app.use(session({
@@ -24,7 +24,8 @@ app.use(session({
     saveUninitialized: false,
     rolling: true,
     cookie: {
-        maxAge: 15000
+        maxAge: 15000,
+        httpOnly: false
     }
 }))
 //handlebars----------------------------------------------------------

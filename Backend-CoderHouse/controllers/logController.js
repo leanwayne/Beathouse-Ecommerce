@@ -10,9 +10,7 @@ module.exports = {
         console.log("DESDE GET", req.session)
         if(req.session.nombre){
             const nombre = req.session.nombre
-            return res.status(200).json(req.session.nombre) 
-        }else{
-            return res.status(400).json({error:"usuario no identificado"})
+            return res.status(200).json(nombre) 
         }
     },
 
@@ -20,7 +18,7 @@ module.exports = {
         let nombre = req.session.nombre? req.session.nombre: ''
         if(nombre) {
             req.session.destroy(err => {
-                res.status(200).send(err)            
+                res.status(200).send(err)             
             })  
         }
     }

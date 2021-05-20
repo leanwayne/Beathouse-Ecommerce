@@ -12,6 +12,6 @@ router.delete("/borrar/:id", verificar, procutoController.borrarProductoPorId);
 router.get("/vista-test", procutoController.listarMockFaker);
 router.post("/login", logController.logIn)
 router.get("/login", logController.logInRead)
-router.delete("/login", logController.logOut)
+router.get("/logout", logController.logOut)
 
 module.exports = router;
