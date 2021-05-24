@@ -1,6 +1,8 @@
 const express = require("express");
-const session = require("express-session")
 const cookieParser = require("cookie-parser")
+const MongoStore = require("connect-mongo")
+const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
+const session = require("express-session")
 const app = express();
 require('./optionsMongo/mongoOptions')
 const fs = require("fs");
@@ -8,7 +10,7 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const handlebars = require("express-handlebars");
 const PORT = process.env.PORT || 8080;
-var cors = require("cors");
+const cors = require("cors");
 const path = require("path");
 const rutaProductos = require("./routes/productosRouter");
 const rutaCarrito = require("./routes/carritoRouter");
@@ -19,14 +21,20 @@ const model = require("./models/modelSchema")
 app.use(cookieParser())
 //Session Setup
 app.use(session({
+    store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://leandro:36847138@cluster0.gbzy8.mongodb.net/ecommerce?retryWrites=true&w=majority',
+      mongoOptions: advancedOptions,
+      ttl: 10,
+      collectionName: 'sessions',
+    }),
     secret: 'shhh',
     resave: true,
     saveUninitialized: false,
     rolling: true,
-    cookie: {
-        maxAge: 15000,
-        httpOnly: false
-    }
+    //cookie: {
+      //  maxAge: 15000,
+      //  httpOnly: false
+    //}
 }))
 //handlebars----------------------------------------------------------
 app.engine(
