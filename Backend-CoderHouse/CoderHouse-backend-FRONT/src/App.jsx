@@ -5,15 +5,14 @@ import Main from "./components/Main";
 import AuthProvider from "./components/contexts/AuthContext";
 
 function App() {
-
-  return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Header/>
-        <Main/>
-      </BrowserRouter>
-    </AuthProvider>
-  );
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <Header/>
+                <Main/>
+            </AuthProvider>
+        </BrowserRouter>
+    );
 }
 
 export default App;
