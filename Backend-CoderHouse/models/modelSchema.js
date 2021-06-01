@@ -13,7 +13,7 @@ const productosSchema = new mongoose.Schema({
     id:{type: String, require: true}
 });
 const productos = new mongoose.model(productosCollection, productosSchema); 
-
+//----------------------------------------------------------------------------------------------------------
 const mensajesCollection = 'mensajes';
 
 const mensajesSchema = new mongoose.Schema({
@@ -22,5 +22,13 @@ const mensajesSchema = new mongoose.Schema({
     mensaje: {type: String, require: true},
 });
 const mensajes = new mongoose.model(mensajesCollection, mensajesSchema); 
+//----------------------------------------------------------------------------------------------------------
+const usuarioCollection = 'usuarios';
 
-module.exports = {productos, mensajes,}
+const usuariosSchema = new mongoose.Schema({
+    username: {type: String, require: true},
+    password: {type: String, require: true},
+});
+const usuarios = new mongoose.model(usuarioCollection, usuariosSchema); 
+//----------------------------------------------------------------------------------------------------------
+module.exports = {productos, mensajes, usuarios,}

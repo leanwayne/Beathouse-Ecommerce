@@ -5,11 +5,12 @@ export const AuthContext = React.createContext();
 
 function AuthProvider({children}) {
     const [user, setUser] = useState("");
+    const [log, setLog] = useState(false);
     const location = useLocation();
     const history = useHistory();
 
     useEffect(() => {
-        fetch("http://localhost:8080/productos/login", {
+        fetch("http://localhost:8080/session/login", {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -17,14 +18,19 @@ function AuthProvider({children}) {
         })
             .then((response) => response.json())
             .then((data) => {
-                if (data.nombre) setUser(data.nombre)
-                else history.push('/')
+                if (data.passport){
+                    setUser(data.passport.user) 
+                    setLog(true) 
+                }else{
+                    history.push('/')
+                }
+                
             })
             .catch((err) => console.log(err));
     },[location.pathname]);
 
     return (
-        <AuthContext.Provider value={{user}}>
+        <AuthContext.Provider value={{user, log, setLog}}>
             {children}
         </AuthContext.Provider>
     );

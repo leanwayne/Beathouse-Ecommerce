@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Grid } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 
 
 export default function MainPage() {
     const [flag, setFlag] = useState(false);
+    const {setLog} = useContext(AuthContext);
     useEffect(() => {
         const interval = setInterval(()=>{
             setFlag(true)
+            setLog(false)
         },3000)
         return () => clearInterval(interval)    
     },[])

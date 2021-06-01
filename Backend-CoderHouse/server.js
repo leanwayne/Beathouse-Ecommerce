@@ -1,10 +1,12 @@
 const express = require("express");
-const cookieParser = require("cookie-parser")
-const MongoStore = require("connect-mongo")
-const advancedOptions = {useNewUrlParser: true, useUnifiedTopology: true}
-const session = require("express-session")
+const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+const session = require("express-session");
 const app = express();
-require('./optionsMongo/mongoOptions')
+require("./optionsMongo/mongoOptions");
+const passport = require("passport");
+require("./passport/passport");
 const fs = require("fs");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
@@ -14,28 +16,30 @@ const cors = require("cors");
 const path = require("path");
 const rutaProductos = require("./routes/productosRouter");
 const rutaCarrito = require("./routes/carritoRouter");
-app.use(cors({origin:'http://localhost:3000',credentials:true}));
-const {mensajesDB} = require("./optionsSqLite/sqLiteOptions");
-const knex = require("knex")(mensajesDB)
-const model = require("./models/modelSchema")
-app.use(cookieParser())
+const rutaSession = require("./routes/sessionRouter");
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+const { mensajesDB } = require("./optionsSqLite/sqLiteOptions");
+const knex = require("knex")(mensajesDB);
+const model = require("./models/modelSchema");
+app.use(cookieParser());
 //Session Setup
-app.use(session({
+app.use(
+  session({
     store: MongoStore.create({
-      mongoUrl: 'mongodb+srv://leandro:36847138@cluster0.gbzy8.mongodb.net/ecommerce?retryWrites=true&w=majority',
+      mongoUrl:
+        "mongodb+srv://leandro:36847138@cluster0.gbzy8.mongodb.net/ecommerce?retryWrites=true&w=majority",
       mongoOptions: advancedOptions,
       ttl: 10,
-      collectionName: 'sessions',
+      collectionName: "sessions",
     }),
-    secret: 'shhh',
+    secret: "shhh",
     resave: true,
     saveUninitialized: false,
     rolling: true,
-    //cookie: {
-      //  maxAge: 15000,
-      //  httpOnly: false
-    //}
-}))
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 //handlebars----------------------------------------------------------
 app.engine(
   "hbs",
@@ -52,20 +56,20 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //------------------------------------------------------------------------
-if(process.env.db === "SqLite"){  
-  knex.schema.hasTable('mensajes').then(exists =>{
+if (process.env.db === "SqLite") {
+  knex.schema.hasTable("mensajes").then((exists) => {
     if (!exists) {
-      return knex.schema.createTable('mensajes', table => {
-        table.string('email', 100);
-        table.string('timestamp', 50);  
-        table.string('mensaje');
+      return knex.schema.createTable("mensajes", (table) => {
+        table.string("email", 100);
+        table.string("timestamp", 50);
+        table.string("mensaje");
       });
-    }else{
-      console.log("Trabajando con DB mensajes") 
+    } else {
+      console.log("Trabajando con DB mensajes");
     }
-  })
+  });
 }
-//socket-------------------------------------------------------------------------------------------------------
+//socket------------------------------product-------------------------------------------------------------------------
 let listaMensajes = [];
 io.on("connection", (socket) => {
   socket.on("client-mensaje", async (message) => {
@@ -76,24 +80,30 @@ io.on("connection", (socket) => {
       mensaje: message.mensaje,
     };
     listaMensajes.push(messageFile);
-    console.log("listamentajes", listaMensajes)
-        //SqLite----------------------------------------------------------------------------------------
-        if(process.env.db === "SqLite"){  
-          knex("mensajes").insert(messageFile)
-          .then( () => {console.log("mensaje guardado")})
-          .catch( e => {console.log(e); throw e;})
-        } 
-        //SqLite----------------------------------------------------------------------------------------
+    console.log("listamentajes", listaMensajes);
+    //SqLite----------------------------------------------------------------------------------------
+    if (process.env.db === "SqLite") {
+      knex("mensajes")
+        .insert(messageFile)
+        .then(() => {
+          console.log("mensaje guardado");
+        })
+        .catch((e) => {
+          console.log(e);
+          throw e;
+        });
+    }
+    //SqLite----------------------------------------------------------------------------------------
     try {
-      if(process.env.db === "fileSystem"){  
+      if (process.env.db === "fileSystem") {
         await fs.promises.writeFile(
           "messages.txt",
           JSON.stringify(listaMensajes)
         );
       }
-      if(process.env.db === "MongoDb"){  
-        await model.mensajes.insertMany(messageFile)//MongoDB--
-      }  
+      if (process.env.db === "MongoDb") {
+        await model.mensajes.insertMany(messageFile); //MongoDB--
+      }
     } catch (err) {
       console.log("Error de escritura", err.error);
     }
@@ -101,29 +111,31 @@ io.on("connection", (socket) => {
 });
 //socket-------------------------------------------------------------------------------------------------------
 switch (process.env.db) {
-  case 'fileSystem':
-    console.log('Utilizando la DataBase FileSystem');
+  case "fileSystem":
+    console.log("Utilizando la DataBase FileSystem");
     break;
-  case 'SqLite':
-    console.log('Utilizando la DataBase SqLite');
+  case "SqLite":
+    console.log("Utilizando la DataBase SqLite");
     break;
-  case 'MongoDb':
-    console.log('Utilizando la DataBase MongoDb');
+  case "MongoDb":
+    console.log("Utilizando la DataBase MongoDb");
     break;
-  case 'MongoAtlas':
-    console.log('Utilizando la DataBase MongoAtlas');
+  case "MongoAtlas":
+    console.log("Utilizando la DataBase MongoAtlas");
     break;
   default:
-    console.log('estas usando todas las bases de datos a la vez (no es recomendable)');
+    console.log(
+      "estas usando todas las bases de datos a la vez (no es recomendable)"
+    );
 }
 //form
 app.get("/", (req, res) => {
-  res.render("index", {  
-  });
+  res.render("index", {});
 });
 
 app.use("/carrito", rutaCarrito);
 app.use("/productos", rutaProductos);
+app.use("/session", rutaSession);
 
 http.listen(PORT, () => {
   console.log(`Server en puerto ${PORT}`);

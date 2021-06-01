@@ -7,7 +7,7 @@ export default function MainPage() {
   const {user} = useContext(AuthContext);
 
   const logOut = () =>{
-    fetch("http://localhost:8080/productos/logout", {
+    fetch("http://localhost:8080/session/logout", {
       headers: {
         "Content-Type": "application/json",
       },
