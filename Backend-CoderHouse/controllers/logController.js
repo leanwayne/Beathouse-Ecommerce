@@ -5,7 +5,7 @@ module.exports = {
     },
 
     showLogIn: (req, res) => {
-        console.log("DESDE GET", req.session)
+        console.log("DESDE GET face", req.session)
         return res.status(200).json(req.session)
     },
 

@@ -28,16 +28,15 @@ export default function LoginPage() {
                 if(!open)setOpen(true) 
                 console.log("error" , err)})
     };
-
     const logInFacebook = () => {
         const requestOptions = {
             headers: {'Content-Type': 'application/json'},
-            credentials: 'include',  
+            credentials: 'include',
         };
-        fetch("http://localhost:8080/session/facebook", requestOptions)
+        fetch("http://localhost:8080/session/login", requestOptions)
             .then(response => response.json())
             .then(data => {
-                console.log("fetch post completado FACEBOOK", data.passport.user)
+                console.log("fetch post completado FACEBOOK", data)
                 history.push('/logged')
             })
             .catch(err =>{
@@ -108,7 +107,7 @@ export default function LoginPage() {
                             </Button>
                         </Grid>
                         <Grid item md={12}>
-                            <Button variant="contained" color="primary" onClick={logInFacebook}>
+                            <Button variant="contained" color="primary" href="http://localhost:8080/session/facebook">
                                 Iniciar Sesion con Facebook
                             </Button>
                         </Grid>

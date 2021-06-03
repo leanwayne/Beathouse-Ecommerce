@@ -1,9 +1,20 @@
 import React, {useContext } from "react";
-import {Container, Button, Grid, Typography} from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import {Container, Button, Grid, Typography, Avatar} from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
 export default function MainPage() {
+  const classes = useStyles();
   const {user} = useContext(AuthContext);
 
   const logOut = () =>{
@@ -20,19 +31,22 @@ export default function MainPage() {
   }
 
   return (
+    <div className={classes.root}>
       <Container maxWidth="md">
         <Grid container>
           <Grid item xs={12}>
             {user && (
                 <Typography>
-                    {`bienvenido ${user}`}
+                    {`bienvenido ${user.username}`}
                 </Typography>
               )}
+            <Avatar alt={user.username} src={user.photo} />
             <Button variant="contained" color="primary" onClick={logOut}>
               <NavLink to={'/logOut'}>Cerrar sesion</NavLink>
             </Button>
           </Grid>
         </Grid>
       </Container>
+    </div>  
   );
 }

@@ -28,7 +28,24 @@ const usuarioCollection = 'usuarios';
 const usuariosSchema = new mongoose.Schema({
     username: {type: String, require: true},
     password: {type: String, require: true},
+    provider: {type: String, require: false},
+    facebook: {type: Object, require: false}
 });
 const usuarios = new mongoose.model(usuarioCollection, usuariosSchema); 
 //----------------------------------------------------------------------------------------------------------
-module.exports = {productos, mensajes, usuarios,}
+
+//----------------------------------------------------------------------------------------------------------
+const usuarioFacebookCollection = 'usuariosfacebook';
+
+const usuariosFacebookSchema = new mongoose.Schema({
+    username: {type: String, require: true},
+    id: {type: String, require: true},
+    photo: {type: String, require: true},
+    accessToken: {type: String, require:true},
+});
+const usuariosfacebook = new mongoose.model(usuarioFacebookCollection, usuariosFacebookSchema); 
+//----------------------------------------------------------------------------------------------------------
+
+
+
+module.exports = {productos, mensajes, usuarios,usuariosfacebook}

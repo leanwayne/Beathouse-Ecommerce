@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 
 
-export default function LogOutPage() {
+export default function ErrorRedSocialPage() {
     const [flag, setFlag] = useState(false);
     const {setLog} = useContext(AuthContext);
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function LogOutPage() {
     <Container maxWidth="md">
       <Grid container>
         <Grid item md={12}>
-            Sesion terminada, hasta pronto!
+            Error al intentar ingresar con Facebook"
         </Grid>
       </Grid>
     </Container>

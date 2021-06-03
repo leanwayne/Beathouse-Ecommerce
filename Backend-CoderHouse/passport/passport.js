@@ -76,18 +76,41 @@ passport.use(
 passport.use('facebook', new FacebookStrategy({
   clientID: "207795154493928",
   clientSecret: "596c4da172ef69a76a53da86298f8496",
-  callbackURL: "/facebook/callback",
-  profileFields: ['id', 'displayName', 'picture.type(large)', 'email']
-}, (accessToken, refreshToken, profile, done) => {
-  console.log("profile desde passport facebook",profile);
-
-  return done(null, user);
+  callbackURL: "http://localhost:8080/session/auth/facebook/callback",
+  profileFields: ['id', 'displayName', 'picture.type(large)'],
+},async (accessToken, refreshToken, profile, done) => {
+  console.log("EL PROFILE DESDE STRATEGY", profile)
+  console.log("EL accessToken DESDE STRATEGY", accessToken)
+    //creo un user 
+    let user = {};
+    user.username = profile.displayName;
+    user.id = profile.id;
+    user.photo = `https://graph.facebook.com/${profile.id}/picture?width=200&height=200&access_token=${accessToken}`
+    user.accessToken = accessToken
+    //busco usuario    
+    try {
+      const respuesta = await model.usuariosfacebook.findOne({ id: profile.id });
+      if(respuesta === null){
+        await model.usuariosfacebook.insertMany(user);
+        console.log("el usuario agregado es:", user.username);
+        return done(null, user);
+      }else{
+        console.log("todo salio joyaaaa")
+        return done(null, user)
+      }
+    } catch (error) {
+        console.log("error facebook", error);
+    }
 }))
 
 passport.serializeUser(function (user, done) {
-  done(null, user.username);
+  console.log("SERIALIZEUSER=======",user)
+  done(null,user);
 });
+
+
 passport.deserializeUser(function (username, done) {
+  //prosible error! corregir
   try {
     const usuario = model.usuarios.findOne({ username: username });
     done(null, usuario);

@@ -19,6 +19,7 @@ function AuthProvider({children}) {
             .then((response) => response.json())
             .then((data) => {
                 if (data.passport){
+                    console.log("DATA que viene del useEffect del context=",data)
                     setUser(data.passport.user) 
                     setLog(true) 
                 }else{

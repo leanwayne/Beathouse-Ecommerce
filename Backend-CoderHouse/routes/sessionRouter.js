@@ -8,8 +8,10 @@ router.post("/login", passport.authenticate('login'), logController.logIn)
 router.get("/login", logController.showLogIn)
 
 //-login-Facebook
-router.get("/facebook", passport.authenticate("facebook", { scope : ['email'] }),logController.logIn);
-router.get("/facebook/callback", passport.authenticate("facebook", { scope : ['email'] }),logController.showLogIn);
+router.get("/facebook", passport.authenticate("facebook" ),(req,res)=>{
+    console.log("desde FACEBOOK",req.profile,req.user)
+});
+router.get('/auth/facebook/callback',passport.authenticate('facebook', { failureRedirect: 'http://localhost:3000/ErrorRedSocialPage' ,successRedirect:'http://localhost:3000/logged'}), logController.showLogIn);
 
 //-register
 router.get("/register",  logController.showRegister);
