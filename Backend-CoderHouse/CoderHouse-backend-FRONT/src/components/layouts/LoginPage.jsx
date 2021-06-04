@@ -142,7 +142,7 @@ export default function LoginPage() {
                 </Grid>
             ):(
                 <>
-                <h1>Usted ya esta logeado papurri!</h1>
+                <h1>Usted ya esta logeado!</h1>
                 </>
                 )}
             {open?(               
@@ -154,16 +154,25 @@ export default function LoginPage() {
                 >
                     {!changeForm?
                         (
+                            <>
                             <DialogTitle id="alert-dialog-title">{"Error al intentar Logearse"}</DialogTitle>
+                            <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                El Usuario o la Clave son incorrectos
+                            </DialogContentText>
+                            </DialogContent>
+                            </>
                         ):(
+                            <>
                             <DialogTitle id="alert-dialog-title">{"Error al intentar Registrarse"}</DialogTitle>
+                            <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                El Usuario ya esta registrado
+                            </DialogContentText>
+                            </DialogContent>
+                            </>
                         )
                     }   
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            El Usuario o la Clave son incorrectos
-                        </DialogContentText>
-                    </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose} color="primary">
                             Volver a Intentar
