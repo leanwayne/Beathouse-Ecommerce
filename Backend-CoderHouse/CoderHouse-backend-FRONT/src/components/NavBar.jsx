@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ButtonAddP from './buttons/ButtonAddP';
+import ButtonChildProc from './buttons/ButtonChildProc';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +34,7 @@ export default function NavBar() {
             Backend Coder-House
           </Typography>
           <ButtonAddP/>
+          <ButtonChildProc/>
         </Toolbar>
       </AppBar>
     </div>

@@ -8,10 +8,11 @@ require("./optionsMongo/mongoOptions");
 const passport = require("passport");
 require("./passport/passport");
 const fs = require("fs");
+//const { fork } = require("child_process") //////////////////////////////////////////////////// desafio clase 28!!!
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const handlebars = require("express-handlebars");
-const PORT = process.env.PORT || 8080;
+const PORT = process.argv[2] || 8080
 const cors = require("cors");
 const path = require("path");
 const rutaProductos = require("./routes/productosRouter");
@@ -128,10 +129,38 @@ switch (process.env.db) {
       "estas usando todas las bases de datos a la vez (no es recomendable)"
     );
 }
+
 //form
 app.get("/", (req, res) => {
   res.render("index", {});
 });
+
+//clase 28. Global Process y Child Process////////////////////////////////////////
+app.get("/info",(req, res) => {
+  res.json(
+    {
+      'argumentos de entrada': process.argv[2] || "",
+      'Nombre de la plataforma': process.platform,
+      'Version de node.js': process.version,
+      'Uso de memoria': process.memoryUsage(),
+      'Path de ejecucion': process.argv[1],
+      'Process id': process.pid,
+      'Carpeta corriente': process.cwd(),
+    }
+  )
+})
+
+//app.get("/randoms",(req, res) => {                                    ///////////activar para probar el desafio 28, mantener comentado para le desafio 29/////////
+//  const calculo = fork("./controllers/functions.js")
+//  const num = req.query.num || 100
+//  console.log("NUM desde ruta=",num)
+//  calculo.send(num)
+//  calculo.on('message', random => {
+//    res.status(200).json(random)
+//  })
+//})
+/////////////////////////////////////////////////////////////////////////////////
+
 
 app.use("/carrito", rutaCarrito);
 app.use("/productos", rutaProductos);

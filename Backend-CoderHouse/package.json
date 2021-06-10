@@ -34,8 +34,9 @@
     "startMongodb": "cross-env process.env.db=MongoDb nodemon server.js",
     "startMongoAtlas": "cross-env process.env.db=MongoAtlas nodemon server.js",
     "startSqLite": "cross-env process.env.db=SqLite nodemon server.js",
+    "prod": "forever start server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC" 
 }

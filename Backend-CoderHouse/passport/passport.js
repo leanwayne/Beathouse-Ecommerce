@@ -74,8 +74,8 @@ passport.use(
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID: "207795154493928",
-  clientSecret: "596c4da172ef69a76a53da86298f8496",
+  clientID:  process.argv[3] || "207795154493928",
+  clientSecret: process.argv[4] || "596c4da172ef69a76a53da86298f8496",
   callbackURL: "http://localhost:8080/session/auth/facebook/callback",
   profileFields: ['id', 'displayName', 'picture.type(large)'],
 },async (accessToken, refreshToken, profile, done) => {
