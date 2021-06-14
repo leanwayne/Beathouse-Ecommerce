@@ -15,8 +15,7 @@ const randomNums = (num) =>{
     return obj
 }
 
-//process.on('message', num =>{
-//    const random = randomNums(num)
-//    process.send(random)
-//})
-//descomentar para desafio 28!
+process.on('message', num =>{
+    const random = randomNums(num)
+    process.send(random)
+})

@@ -8,7 +8,7 @@ require("./optionsMongo/mongoOptions");
 const passport = require("passport");
 require("./passport/passport");
 const fs = require("fs");
-//const { fork } = require("child_process") //////////////////////////////////////////////////// desafio clase 28!!!
+const { fork } = require("child_process") 
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const handlebars = require("express-handlebars");
@@ -53,7 +53,7 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.static("public"));
+//app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //------------------------------------------------------------------------
@@ -150,15 +150,15 @@ app.get("/info",(req, res) => {
   )
 })
 
-//app.get("/randoms",(req, res) => {                                    ///////////activar para probar el desafio 28, mantener comentado para le desafio 29/////////
-//  const calculo = fork("./controllers/functions.js")
-//  const num = req.query.num || 100
-//  console.log("NUM desde ruta=",num)
-//  calculo.send(num)
-//  calculo.on('message', random => {
-//    res.status(200).json(random)
-//  })
-//})
+app.get("/randoms",(req, res) => {                                    ///////////activar para probar el desafio 28, mantener comentado para le desafio 29/////////
+  const calculo = fork("./controllers/functions.js")
+  const num = req.query.num || 100
+  console.log("NUM desde ruta=",num)
+  calculo.send(num)
+  calculo.on('message', random => {
+    res.status(200).json(random)
+  })
+})
 /////////////////////////////////////////////////////////////////////////////////
 
 
