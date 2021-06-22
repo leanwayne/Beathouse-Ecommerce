@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const session = require("express-session");
+const compression = require("compression")
 const app = express();
 require("./optionsMongo/mongoOptions");
 const passport = require("passport");
@@ -12,7 +13,7 @@ const { fork } = require("child_process")
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const handlebars = require("express-handlebars");
-const PORT = process.argv[2] || 8080
+const PORT = process.env.PORT || 8080
 const cors = require("cors");
 const path = require("path");
 const rutaProductos = require("./routes/productosRouter");
@@ -41,6 +42,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(compression())
 //handlebars----------------------------------------------------------
 app.engine(
   "hbs",
@@ -131,9 +133,9 @@ switch (process.env.db) {
 }
 
 //form
-app.get("/", (req, res) => {
-  res.render("index", {});
-});
+//app.get("/", (req, res) => {
+//  res.render("index", {});
+//});
 
 //clase 28. Global Process y Child Process////////////////////////////////////////
 app.get("/info",(req, res) => {
@@ -150,7 +152,7 @@ app.get("/info",(req, res) => {
   )
 })
 
-app.get("/randoms",(req, res) => {                                    ///////////activar para probar el desafio 28, mantener comentado para le desafio 29/////////
+app.get("/randoms",(req, res) => {
   const calculo = fork("./controllers/functions.js")
   const num = req.query.num || 100
   console.log("NUM desde ruta=",num)
@@ -160,7 +162,13 @@ app.get("/randoms",(req, res) => {                                    //////////
   })
 })
 /////////////////////////////////////////////////////////////////////////////////
-
+app.get("/artillery",(req, res) =>{
+  fs.existsSync("testDecarga.txt")? res.sendFile(path.join(__dirname, "/testDecarga.txt")) : res.status(200).json(
+    {
+      mensaje:'debe correr el siguiente comando para generar el archivo: artillery quick --count 10 -n 50 http://localhost:8080/info > testDeCarga.txt'
+    }
+  )
+})
 
 app.use("/carrito", rutaCarrito);
 app.use("/productos", rutaProductos);

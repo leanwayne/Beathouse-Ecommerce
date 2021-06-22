@@ -2,6 +2,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const model = require("../models/modelSchema");
+const logger = require("../log4js/log4js")
 
 passport.use(
   "login",
@@ -15,19 +16,20 @@ passport.use(
       try {
         user = await model.usuarios.findOne({ username: username });
       } catch (error) {
-        console.log("error", error);
+        logger.logError.error(error)        
       }
       if (!user) {
-        console.log("Usuario incorrecto");
+        logger.logInfo.info("Usuario incorrecto");
+  
         return done(null, false);
       }
       //valido password
       let credencialesOk = user.username === username && user.password === password;
       if (!credencialesOk) {
-        console.log("Contraseña incorrecta");
+        logger.logInfo.info("constraseña incorrecta")
         return done(null, false);
       }
-      console.log("logeado correctamente");
+      logger.logInfo.info("logeado correctamente");
       return done(null, user);
     }
   )
@@ -48,11 +50,11 @@ passport.use(
           });
           if (respuesta === null) respuesta = "cosmes";
           if (respuesta.username === username) {
-            console.log("usuario ya registrado en MongoDB:",respuesta.username);
-            return done(null, false);
+            logger.logInfo.info("usuario ya registrado en MongoDB:",respuesta.username);
           }
         } catch (error) {
-          console.log("error aca esta el error ? ", error);
+          logger.logError.error(error);
+          return done(null, false);
         }
         //sino existe lo creo
         let user = {};
@@ -61,11 +63,11 @@ passport.use(
         try {
           await model.usuarios.insertMany(user);
           const respuesta = await model.usuarios.findOne({username: username,});
-          console.log("el usuario agregado es:", respuesta.username);
+          logger.logInfo.info("el usuario agregado es:", respuesta.username);
         } catch (error) {
-          console.log("no se pudo agregar el usuario", error);
+          logger.logError.error("no se pudo agregar el usuario", error);
         }
-        console.log("PASSPORT el registo salio BIEN ");
+        logger.logInfo.info("PASSPORT el registo salio BIEN ");
         return done(null, user);
       };
       process.nextTick(findOrCreateUser);
@@ -74,13 +76,11 @@ passport.use(
 );
 
 passport.use('facebook', new FacebookStrategy({
-  clientID:  process.argv[3] || "207795154493928",
-  clientSecret: process.argv[4] || "596c4da172ef69a76a53da86298f8496",
+  clientID: "312809223655977",
+  clientSecret: "2c55a297134fb6e1cbec283cb3c22f80",
   callbackURL: "http://localhost:8080/session/auth/facebook/callback",
   profileFields: ['id', 'displayName', 'picture.type(large)'],
 },async (accessToken, refreshToken, profile, done) => {
-  console.log("EL PROFILE DESDE STRATEGY", profile)
-  console.log("EL accessToken DESDE STRATEGY", accessToken)
     //creo un user 
     let user = {};
     user.username = profile.displayName;
@@ -92,19 +92,19 @@ passport.use('facebook', new FacebookStrategy({
       const respuesta = await model.usuariosfacebook.findOne({ id: profile.id });
       if(respuesta === null){
         await model.usuariosfacebook.insertMany(user);
-        console.log("el usuario agregado es:", user.username);
+        logger.logInfo.info("el usuario agregado es:", user.username);
         return done(null, user);
       }else{
-        console.log("todo salio joyaaaa")
+        logger.logInfo.info("todo salio joyaaaa")
         return done(null, user)
       }
     } catch (error) {
-        console.log("error facebook", error);
+      logger.logError.error("error facebook", error);
     }
 }))
 
 passport.serializeUser(function (user, done) {
-  console.log("SERIALIZEUSER=======",user)
+  logger.log.info("SERIALIZEUSER=======",user)
   done(null,user);
 });
 
@@ -115,6 +115,6 @@ passport.deserializeUser(function (username, done) {
     const usuario = model.usuarios.findOne({ username: username });
     done(null, usuario);
   } catch (error) {
-    console.log("DESERIALIZEUSER___", error);
+    logger.log.error("DESERIALIZEUSER___", error);
   }
 });
