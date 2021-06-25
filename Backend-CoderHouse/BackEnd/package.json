@@ -20,23 +20,23 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.7",
     "mysql": "^2.18.1",
+    "nodemailer": "^4.7.0",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
     "session-file-store": "^1.5.0",
     "socket.io": "^4.0.0",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "twilio": "^3.64.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
   },
   "scripts": {
     "dev": "nodemon server.js",
-    "startFileSystem": "cross-env process.env.db=fileSystem nodemon server.js",
     "startMongodb": "cross-env process.env.db=MongoDb nodemon server.js",
     "startMongoAtlas": "cross-env process.env.db=MongoAtlas nodemon server.js",
-    "startSqLite": "cross-env process.env.db=SqLite nodemon server.js",
     "prod": "forever start server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

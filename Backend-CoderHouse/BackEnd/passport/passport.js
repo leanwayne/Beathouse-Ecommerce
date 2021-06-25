@@ -95,7 +95,6 @@ passport.use('facebook', new FacebookStrategy({
         logger.logInfo.info("el usuario agregado es:", user.username);
         return done(null, user);
       }else{
-        logger.logInfo.info("todo salio joyaaaa")
         return done(null, user)
       }
     } catch (error) {
@@ -104,7 +103,6 @@ passport.use('facebook', new FacebookStrategy({
 }))
 
 passport.serializeUser(function (user, done) {
-  logger.log.info("SERIALIZEUSER=======",user)
   done(null,user);
 });
 
