@@ -5,9 +5,9 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const session = require("express-session");
 const compression = require("compression")
 const app = express();
-require("./optionsMongo/mongoOptions");
+require("../optionsMongo/mongoOptions");
 const passport = require("passport");
-require("./passport/passport");
+require("../passport/passport");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const handlebars = require("express-handlebars");
@@ -27,7 +27,7 @@ app.use(
       mongoUrl:
         "mongodb+srv://leandro:36847138@cluster0.gbzy8.mongodb.net/ecommerce?retryWrites=true&w=majority",
       mongoOptions: advancedOptions,
-      ttl: 20,
+      ttl: 30,
       collectionName: "sessions",
     }),
     secret: "shhh",
@@ -106,7 +106,7 @@ app.get("/info",(req, res) => {
   )
 })
 
-app.use("/carrito", rutaCarrito);
+app.use("/cart", rutaCarrito);
 app.use("/productos", rutaProductos);
 app.use("/session", rutaSession);
 

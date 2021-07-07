@@ -1,6 +1,8 @@
 let moment = require("moment");
 const model = require("../models/modelSchema")
-const { getFakeProducts } = require("../fakerMock/productoFaker")
+const { getFakeProducts } = require("../../utils/fakerMock/productoFaker")
+
+
 
 module.exports = {
    agregarProducto: async (req, res) => {
@@ -37,18 +39,17 @@ module.exports = {
       respuesta = await model.productos.find({}).sort({nombre: 1}); //MongoDB-----
       console.log("lista productos de Mongo:", respuesta)
     }
+    const respuestaid = await model.productos.find({});
+    console.log("RESPUESTAID",respuestaid)
     res.status(200).json(respuesta);
   },
 
   obtenerProductoPorId: async (req, res) => {
-    let producto = undefined
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        const respuesta = await model.productos.find({id:req.params.id}); //MongoDB-----
-        console.log("producto de Mongo:", respuesta)
-        return res.status(200).json(producto);
+        const respuesta = await model.productos.find({id: req.query.id}); //MongoDB-----
+        return res.status(200).json(respuesta);
       } catch (error) {
-        console.log("producto no encontrado") 
         return res.status(400).send(error);
       }
     }  
@@ -68,11 +69,13 @@ module.exports = {
       timestamp: moment().format("DD/MM/YYYY HH:MM:SS"),
       id: req.params.id
     };
-
+    let supercart = []
+      supercart.push(product)
+    
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        resultado = await model.productos.updateOne({ id: req.params.id }, { $set: product });//MongoDB---
-        console.log("producto actualizado de Mongo:", resultado)  
+        resultado = await model.productos.updateOne({ id: req.query.id }, { $set: product });//MongoDB---
+        console.log("producto actualizado de Mongo:", resultado)   
         return res.status(200).json(resultado)
       } catch (error) {
         console.log("no se pudo actualizar el producto", error)
@@ -84,7 +87,7 @@ module.exports = {
   borrarProductoPorId: async (req, res) => {
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        resultado = await model.productos.deleteOne({id: req.params.id});//MongoDB- ----
+        resultado = await model.productos.deleteOne({id: req.query.id});//MongoDB- ----
         console.log("producto borrado de Mongo:", resultado)  
         return res.status(200).json(resultado);
       } catch (error) {

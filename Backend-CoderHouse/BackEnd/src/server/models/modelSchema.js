@@ -29,7 +29,8 @@ const usuariosSchema = new mongoose.Schema({
     username: {type: String, require: true},
     password: {type: String, require: true},
     provider: {type: String, require: false},
-    facebook: {type: Object, require: false}
+    facebook: {type: Object, require: false},
+    cart: {type: Array, require: true},
 });
 const usuarios = new mongoose.model(usuarioCollection, usuariosSchema); 
 //----------------------------------------------------------------------------------------------------------
@@ -42,10 +43,20 @@ const usuariosFacebookSchema = new mongoose.Schema({
     id: {type: String, require: true},
     photo: {type: String, require: true},
     accessToken: {type: String, require:true},
+    cart: {type: Array, require: true},
 });
 const usuariosfacebook = new mongoose.model(usuarioFacebookCollection, usuariosFacebookSchema); 
+//----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------
+const cartCollection = 'carts';
+
+const cartSchema = new mongoose.Schema({
+    userID: {type: String, require: true},
+    cartList: {type: Array, require: true},
+});
+const carts = new mongoose.model(cartCollection, cartSchema); 
 //----------------------------------------------------------------------------------------------------------
 
 
 
-module.exports = {productos, mensajes, usuarios,usuariosfacebook}
+module.exports = {productos, mensajes, usuarios,usuariosfacebook, carts,}

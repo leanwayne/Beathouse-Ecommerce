@@ -1,2 +1,13 @@
 
 [2021-06-22T11:14:04.657] [ERROR] error - Usuario incorrecto
+[2021-07-01T11:59:31.344] [ERROR] error - TypeError: Cannot read property 'username' of undefined
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - copia - copia\passport\passport.js:52:25)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-07-04T00:42:51.430] [ERROR] error - MongooseError: Operation `usuarios.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - copia - copia\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:20)
+    at listOnTimeout (internal/timers.js:555:17)
+    at processTimers (internal/timers.js:498:7)
+[2021-07-04T00:42:56.964] [ERROR] error - MongooseError: Operation `usuarios.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - copia - copia\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:20)
+    at listOnTimeout (internal/timers.js:555:17)
+    at processTimers (internal/timers.js:498:7)

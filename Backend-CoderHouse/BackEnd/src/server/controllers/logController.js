@@ -4,7 +4,11 @@ let moment = require("moment");
 module.exports = {
     logIn: (req, res) => {
         console.log("DESDE POST",req.session)
-        res.status(200).json(req.session)
+        if(req.session){
+           return res.status(200).json(req.session)
+        }else{
+            return res.starus(400).json({error:"usuario no logeado"})
+        }
     },
 
     showLogIn: (req, res) => {
@@ -56,7 +60,7 @@ module.exports = {
                     console.log(info)
                     if(err) console.log("error: ", err);
                 })
-            return req.session.destroy(err => res.status(200).send(err))
+            return req.session.destroy(err => res.status(200).send("sesion terminada"))
         }
         return res.status(200).json(req.session)
     },
@@ -68,7 +72,7 @@ module.exports = {
 
     showRegister: (req, res) => { 
         if(req.session.passport){
-           return res.status(200).send("okey")
+           return res.status(200).send(req.session)
         }else{
             return res.status(400).send("no se encontro la session")
         }

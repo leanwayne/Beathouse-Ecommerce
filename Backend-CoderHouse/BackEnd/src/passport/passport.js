@@ -1,8 +1,9 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
-const model = require("../models/modelSchema");
-const logger = require("../log4js/log4js")
+const model = require("../server/models/modelSchema");
+const logger = require("../utils/log4js/log4js")
+const bcrypt = require('bcrypt');
 
 passport.use(
   "login",
@@ -23,14 +24,29 @@ passport.use(
   
         return done(null, false);
       }
-      //valido password
-      let credencialesOk = user.username === username && user.password === password;
-      if (!credencialesOk) {
+      
+    
+    
+      const match = await bcrypt.compare(password, user.password);
+    
+      if(match) {
+        logger.logInfo.info("logeado correctamente");
+        return done(null, user);
+      }else{
+        console.log(user)
         logger.logInfo.info("constraseña incorrecta")
         return done(null, false);
       }
-      logger.logInfo.info("logeado correctamente");
-      return done(null, user);
+
+      
+      //valido password
+      //let credencialesOk = user.username === username && user.password === password;
+      //if (!credencialesOk) {
+        //logger.logInfo.info("constraseña incorrecta")
+        //return done(null, false);
+      //}
+      //logger.logInfo.info("logeado correctamente");
+      //return done(null, user);
     }
   )
 );
@@ -48,18 +64,24 @@ passport.use(
           let respuesta = await model.usuarios.findOne({
             username: username,
           });
-          if (respuesta === null) respuesta = "cosmes";
+          if (respuesta === null) respuesta = "";
           if (respuesta.username === username) {
             logger.logInfo.info("usuario ya registrado en MongoDB:",respuesta.username);
+            return done(null, false);
           }
         } catch (error) {
           logger.logError.error(error);
-          return done(null, false);
         }
         //sino existe lo creo
         let user = {};
         user.username = username;
-        user.password = password;
+        user.cart = []
+
+        bcrypt.hash(password, 10, function(err, hash) {
+          user.password = hash
+        });
+
+  
         try {
           await model.usuarios.insertMany(user);
           const respuesta = await model.usuarios.findOne({username: username,});
@@ -87,6 +109,7 @@ passport.use('facebook', new FacebookStrategy({
     user.id = profile.id;
     user.photo = `https://graph.facebook.com/${profile.id}/picture?width=200&height=200&access_token=${accessToken}`
     user.accessToken = accessToken
+    user.cart = []
     //busco usuario    
     try {
       const respuesta = await model.usuariosfacebook.findOne({ id: profile.id });
@@ -108,7 +131,6 @@ passport.serializeUser(function (user, done) {
 
 
 passport.deserializeUser(function (username, done) {
-  //prosible error! corregir
   try {
     const usuario = model.usuarios.findOne({ username: username });
     done(null, usuario);
