@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 let moment = require("moment");
+const model = require("../models/modelSchema");
 
 module.exports = {
     logIn: (req, res) => {
@@ -65,7 +66,7 @@ module.exports = {
         return res.status(200).json(req.session)
     },
 
-    register: (req, res) => {  
+    register: async (req, res) => {  
         console.log("desde ruta register SESSION",req.session)
         res.status(200).json(req.session)
     },

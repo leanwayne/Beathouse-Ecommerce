@@ -27,9 +27,10 @@ module.exports = {
         descripcion: req.body.descripcion || "sin descripcion",
         marca: req.body.marca || "sin marca",
         precio: req.body.precio,
+        fotoUrl: req.body.fotoUrl || "sin foto",
         color: req.body.color,
         stock: req.body.stock,
-        codigoP: req.body.codigoP,
+        codigoP: req.body.codigoP || "sin codigo",
         id: req.body._id
       },
       cantidad: req.body.cantidad,     

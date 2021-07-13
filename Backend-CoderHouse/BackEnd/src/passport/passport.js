@@ -12,23 +12,17 @@ passport.use(
       passReqToCallback: true,
     },
     async function (req, username, password, done) {
-      let user = undefined;
-      //busco usuario
-      try {
+      let user = undefined
+      try { //busco usuario
         user = await model.usuarios.findOne({ username: username });
       } catch (error) {
         logger.logError.error(error)        
       }
       if (!user) {
         logger.logInfo.info("Usuario incorrecto");
-  
         return done(null, false);
-      }
-      
-    
-    
-      const match = await bcrypt.compare(password, user.password);
-    
+      }      
+      const match = await bcrypt.compare(password, user.password);   
       if(match) {
         logger.logInfo.info("logeado correctamente");
         return done(null, user);
@@ -37,16 +31,6 @@ passport.use(
         logger.logInfo.info("constraseña incorrecta")
         return done(null, false);
       }
-
-      
-      //valido password
-      //let credencialesOk = user.username === username && user.password === password;
-      //if (!credencialesOk) {
-        //logger.logInfo.info("constraseña incorrecta")
-        //return done(null, false);
-      //}
-      //logger.logInfo.info("logeado correctamente");
-      //return done(null, user);
     }
   )
 );
@@ -75,22 +59,17 @@ passport.use(
         //sino existe lo creo
         let user = {};
         user.username = username;
-        user.cart = []
-
-        bcrypt.hash(password, 10, function(err, hash) {
-          user.password = hash
-        });
-
-  
+        user.cart = []      
         try {
-          await model.usuarios.insertMany(user);
-          const respuesta = await model.usuarios.findOne({username: username,});
-          logger.logInfo.info("el usuario agregado es:", respuesta.username);
+          bcrypt.hash(password, 10).then(function(hash) {
+            user.password = hash
+            model.usuarios.insertMany(user);
+          });
+          logger.logInfo.info("nuevo registro completado");
+          return done(null, user);
         } catch (error) {
           logger.logError.error("no se pudo agregar el usuario", error);
         }
-        logger.logInfo.info("PASSPORT el registo salio BIEN ");
-        return done(null, user);
       };
       process.nextTick(findOrCreateUser);
     }

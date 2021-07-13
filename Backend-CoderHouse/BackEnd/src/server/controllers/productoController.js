@@ -5,23 +5,26 @@ const { getFakeProducts } = require("../../utils/fakerMock/productoFaker")
 
 
 module.exports = {
+  
    agregarProducto: async (req, res) => {
      if (!isProduct(req.body)) {
        return res.status(400).send("Error en los parametros");
      }
      let product = {
        nombre: req.body.nombre,
-       precio: req.body.precio,
        descripcion: req.body.descripcion || "sin descripcion",
-       codigo: moment().format("DD/MM/YYYY HH:MM:SS"),
-       foto: req.body.foto,
+       marca: req.body.marca || "sin marca",
+       precio: req.body.precio,
+       fotoUrl: req.body.fotoUrl || "sin foto",
+       color: req.body.color,
        stock: req.body.stock,
+       codigoP: req.body.codigoP || "sin codigo",
        timestamp: moment().format("DD/MM/YYYY HH:MM:SS"),
      };
 
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){  
-      const respuesta = await model.productos.find({}).sort({nombre: 1});
-      product.id = (respuesta.length + 1).toString()
+     // const respuesta = await model.productos.find({}).sort({nombre: 1});
+     // product.id = (respuesta.length + 1).toString()
       try {
         model.productos.insertMany(product)//MongoDB--
         console.log("producto agregado a mongoDB")
@@ -117,7 +120,7 @@ const isProduct = (object) => {
       object.nombre &&
       typeof object.nombre === "string" &&
       object.precio &&
-      object.foto &&
-      typeof object.foto === "string"
+      object.fotoUrl &&
+      typeof object.fotoUrl === "string"
     );
   };

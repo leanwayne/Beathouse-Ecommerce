@@ -4,13 +4,14 @@ const productosCollection = 'productos';
 
 const productosSchema = new mongoose.Schema({
     nombre: {type: String, require: true},
-    precio: {type: Number, require: true},
     descripcion: {type: String, require: false},
-    foto: {type: String, require: true},
+    marca: {type: String, require: false},
+    precio: {type: Number, require: true},
+    fotoUrl: {type: String, require: true},
+    color: {type: String, require: false},
     stock: {type: Number, require: true},
-    codigo: {type: String, require: true},
+    codigoP: {type: String, require: true},
     timestamp:{type: String, require: true},
-    id:{type: String, require: true}
 });
 const productos = new mongoose.model(productosCollection, productosSchema); 
 //----------------------------------------------------------------------------------------------------------

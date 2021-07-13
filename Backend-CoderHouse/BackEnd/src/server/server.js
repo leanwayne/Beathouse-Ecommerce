@@ -39,6 +39,19 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(compression())
+
+
+const { schema, root} = require('../graphql/graphqlConfig')
+const { graphqlHTTP, }  = require('express-graphql');
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true
+}));
+
+
+
+
 //handlebars----------------------------------------------------------
 app.engine(
   "hbs",

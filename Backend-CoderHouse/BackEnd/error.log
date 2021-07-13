@@ -11,3 +11,15 @@
     at Timeout.<anonymous> (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - copia - copia\node_modules\mongoose\lib\drivers\node-mongodb-native\collection.js:185:20)
     at listOnTimeout (internal/timers.js:555:17)
     at processTimers (internal/timers.js:498:7)
+[2021-07-07T22:29:59.304] [ERROR] error - no se pudo agregar el usuario TypeError: model.usuarios.insert is not a function
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - creacion de cart- metodo cart en user - ordenado\src\passport\passport.js:88:32)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-07-07T22:30:38.321] [ERROR] error - no se pudo agregar el usuario TypeError: model.usuarios.insertOne is not a function
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - creacion de cart- metodo cart en user - ordenado\src\passport\passport.js:88:32)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-07-07T22:33:13.751] [ERROR] error - no se pudo agregar el usuario TypeError: model.usuarios.insertOne is not a function
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - creacion de cart- metodo cart en user - ordenado\src\passport\passport.js:88:32)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-07-07T22:55:36.552] [ERROR] error - no se pudo agregar el usuario ReferenceError: myPlaintextPassword is not defined
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - creacion de cart- metodo cart en user - ordenado\src\passport\passport.js:83:23)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
