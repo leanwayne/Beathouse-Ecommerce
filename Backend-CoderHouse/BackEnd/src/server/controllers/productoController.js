@@ -38,19 +38,25 @@ module.exports = {
 
   listarProductos: async (req, res) => {
     let respuesta = undefined
-    if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){ 
-      respuesta = await model.productos.find({}).sort({nombre: 1}); //MongoDB-----
-      console.log("lista productos de Mongo:", respuesta)
+    if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
+      try {
+        respuesta = await model.productos.find({}).sort({nombre: 1}); //MongoDB-----
+        console.log("lista productos de Mongo:", respuesta)      
+        res.status(200).json(respuesta);
+      } catch (error) {
+        res.status(400).send(error);
+      }
     }
-    const respuestaid = await model.productos.find({});
-    console.log("RESPUESTAID",respuestaid)
-    res.status(200).json(respuesta);
   },
 
   obtenerProductoPorId: async (req, res) => {
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        const respuesta = await model.productos.find({id: req.query.id}); //MongoDB-----
+        const respuesta = await model.productos.find({
+          $or:[{nombre: req.query.nombre},{_id: req.query.id}]
+        });
+        console.log("la respuesta producto encontrado", respuesta)
+        if(respuesta.length === 0)return res.status(400).send("no hay productos con los parametros indicados");
         return res.status(200).json(respuesta);
       } catch (error) {
         return res.status(400).send(error);
@@ -59,27 +65,30 @@ module.exports = {
   },
 
   actualizarProductoPorId: async (req, res) => {
-    if (!isProduct(req.body)) {
-      return res.status(400).send("Error en los parametros");
+    let productOriginal
+    try {
+      productOriginal = await model.productos.find({
+        $or:[{_id: req.query.id}]
+      }); 
+    } catch (error) {
+      return res.status(400).send("Id incorrecto")
     }
     let product = {
-      nombre: req.body.nombre,
-      precio: req.body.precio,
-      descripcion: req.body.descripcion || "sin descripcion",
-      codigo: moment().format("DD/MM/YYYY HH:MM:SS"),
-      foto: req.body.foto,
-      stock: req.body.stock,
+      nombre: req.body.nombre || productOriginal[0].nombre,
+      descripcion: req.body.descripcion || productOriginal[0].descripcion,
+      marca: req.body.marca || productOriginal[0].marca,
+      precio: req.body.precio || productOriginal[0].precio,
+      fotoUrl: req.body.fotoUrl || productOriginal[0].fotoUrl,
+      color: req.body.color || productOriginal[0].color,
+      stock: req.body.stock || productOriginal[0].stock,
+      codigoP: req.body.codigoP || productOriginal[0].codigoP,
       timestamp: moment().format("DD/MM/YYYY HH:MM:SS"),
-      id: req.params.id
     };
-    let supercart = []
-      supercart.push(product)
-    
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        resultado = await model.productos.updateOne({ id: req.query.id }, { $set: product });//MongoDB---
-        console.log("producto actualizado de Mongo:", resultado)   
-        return res.status(200).json(resultado)
+        resultado1 = await model.productos.updateOne({ _id: req.query.id }, { $set: product })
+        console.log("producto actualizado de Mongo:", resultado1)   
+        return res.status(200).json(product)
       } catch (error) {
         console.log("no se pudo actualizar el producto", error)
         return res.status(400).send(error)
@@ -90,7 +99,7 @@ module.exports = {
   borrarProductoPorId: async (req, res) => {
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){
       try {
-        resultado = await model.productos.deleteOne({id: req.query.id});//MongoDB- ----
+        resultado = await model.productos.deleteOne({_id: req.query.id});//MongoDB- ----
         console.log("producto borrado de Mongo:", resultado)  
         return res.status(200).json(resultado);
       } catch (error) {

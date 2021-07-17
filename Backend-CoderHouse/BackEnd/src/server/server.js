@@ -91,20 +91,6 @@ io.on("connection", (socket) => {
   });
 });
 //socket-------------------------------------------------------------------------------------------------------
-switch (process.env.db) {
-
-  case "MongoDb":
-    console.log("Utilizando la DataBase MongoDb");
-    break;
-  case "MongoAtlas":
-    console.log("Utilizando la DataBase MongoAtlas");
-    break;
-  default:
-    console.log(
-      "estas usando todas las bases de datos a la vez (no es recomendable)"
-    );
-}
-
 app.get("/info",(req, res) => {
   res.json(
     {
