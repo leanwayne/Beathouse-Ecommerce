@@ -1,8 +1,16 @@
 let moment = require("moment");
 const model = require("../models/modelSchema")
 const { getFakeProducts } = require("../../utils/fakerMock/productoFaker")
+const fs = require('fs')
 
-
+function base64_encode(file) {
+  return new Promise (resolve, reject => {
+   // read binary data
+   var bitmap = fs.readFileSync(file);
+   // convert binary data to base64 encoded string
+   resolve(new Buffer.from(bitmap).toString('base64'));
+  })
+ }
 
 module.exports = {
   
@@ -10,6 +18,14 @@ module.exports = {
      if (!isProduct(req.body)) {
        return res.status(400).send("Error en los parametros");
      }
+ 
+     try {   
+      let imageAsBase64 = await base64_encode(`../../../archivos/${req.file.originalname}`)
+       console.log("la imagen en base64---------", imageAsBase64)
+     } catch (error) {
+       
+     }
+
      let product = {
        nombre: req.body.nombre,
        descripcion: req.body.descripcion || "sin descripcion",
@@ -21,12 +37,12 @@ module.exports = {
        codigoP: req.body.codigoP || "sin codigo",
        timestamp: moment().format("DD/MM/YYYY HH:MM:SS"),
      };
+     console.log("contenido del body---------------", req.body)
+     console.log("contenido del body file---------------", req.file)
 
     if(process.env.db === "MongoDb" || process.env.db === "MongoAtlas" ){  
-     // const respuesta = await model.productos.find({}).sort({nombre: 1});
-     // product.id = (respuesta.length + 1).toString()
       try {
-        model.productos.insertMany(product)//MongoDB--
+        model.productos.insertMany(product)
         console.log("producto agregado a mongoDB")
         return res.status(200).json(product);
       } catch (error) {
@@ -128,8 +144,9 @@ const isProduct = (object) => {
     return (
       object.nombre &&
       typeof object.nombre === "string" &&
-      object.precio &&
-      object.fotoUrl &&
-      typeof object.fotoUrl === "string"
+      object.precio
+      // &&
+      //object.fotoUrl &&
+      //typeof object.fotoUrl === "string"
     );
   };
