@@ -22,13 +22,14 @@ function AuthProvider({children}) {
                     console.log("DATA que viene del useEffect del context=",data)
                     setUser(data.passport.user) 
                     setLog(true) 
-                }else{
-                    history.push('/')
                 }
-                
             })
-            .catch((err) => console.log(err));
+            .catch((err) =>{
+                console.log("error desde AuthContext",err)
+            });
+                
     },[location.pathname]);
+
 
     return (
         <AuthContext.Provider value={{user, log, setLog}}>
