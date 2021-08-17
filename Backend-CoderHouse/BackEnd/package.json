@@ -13,6 +13,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "express-handlebars": "^5.2.1",
@@ -47,7 +48,7 @@
     "startMongodb": "cross-env process.env.db=MongoDb nodemon server.js",
     "startMongoAtlas": "cross-env process.env.db=MongoAtlas nodemon server.js",
     "prod": "forever start server.js",
-    "test": "cross-env process.env.db=testDatabase mocha --recursive"
+    "test": "mocha --recursive"
   },
   "author": "",
   "license": "ISC"

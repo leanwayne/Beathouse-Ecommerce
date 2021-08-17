@@ -14,9 +14,7 @@ log4js.configure({
     }
 })
 
-
 const logInfo = log4js.getLogger("info")
 const logError = log4js.getLogger("error")
-
 
 module.exports = { logInfo, logError }

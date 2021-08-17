@@ -7,7 +7,9 @@ const {upload} = require('../../utils/multer/multer')
 router.post("/agregar", upload.single('fotoUrl') ,productoController.agregarProducto);
 router.get("/listar", productoController.listarProductos);
 router.get("/listarid", productoController.obtenerProductoPorId);
-router.put("/actualizar", verificar, productoController.actualizarProductoPorId);
+router.get("/listarCat", productoController.obtenerProductosPorCategoria);
+router.get("/listarDestacados", productoController.obtenerProductosDestacados);
+router.put("/actualizar", verificar, upload.single('fotoUrl'), productoController.actualizarProductoPorId);
 router.delete("/borrar", verificar, productoController.borrarProductoPorId);
 router.get("/vista-test", productoController.listarMockFaker);
 

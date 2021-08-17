@@ -23,3 +23,12 @@
 [2021-07-07T22:55:36.552] [ERROR] error - no se pudo agregar el usuario ReferenceError: myPlaintextPassword is not defined
     at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-CoderHouse - creacion de cart- metodo cart en user - ordenado\src\passport\passport.js:83:23)
     at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-08-12T21:40:48.690] [ERROR] error - no se pudo agregar el usuario TypeError: done is not a function
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-puliendo el codigo\src\passport\passport.js:69:18)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-08-14T18:10:47.322] [ERROR] error - ReferenceError: email is not defined
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-puliendo el codigo\src\passport\passport.js:51:35)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+[2021-08-14T18:10:49.913] [ERROR] error - ReferenceError: email is not defined
+    at findOrCreateUser (C:\Users\lean_\OneDrive\Desktop\CoderHouse\carpeta de proyecto\proyecto\Backend-puliendo el codigo\src\passport\passport.js:51:35)
+    at processTicksAndRejections (internal/process/task_queues.js:95:5)
