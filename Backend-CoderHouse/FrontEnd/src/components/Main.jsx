@@ -1,28 +1,31 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import LoginPage from "./layouts/LoginPage";
 import MainPage from "./layouts/MainPage";
-import LogOutPage from "./layouts/LogOutPage";
-import ErrorRedSocialPage from "./layouts/ErrorRedSocialPage"
-
+import { Route, Switch } from "react-router-dom";
+import ProductsPage from "./layouts/ProductsPage";
+import SignInPage from "./layouts/SignInPage";
+import SignUpPage from "./layouts/SignUpPage";
+import DetailPage from "./layouts/DetailPage";
 
 export default function Main() {
     return(
-        <div>
+        <div>                      
             <Switch>
-                <Route exact path="/">
-                    <LoginPage/> 
-                </Route> 
-                <Route exact path="/logged">
+                <Route exact path="/">  
                     <MainPage/>
-                </Route>                
-                <Route exact path="/logOut">
-                    <LogOutPage/>
                 </Route>
-                <Route exact path="/ErrorRedSocialPage">
-                    <ErrorRedSocialPage/>
-                </Route> 
-            </Switch>
+                <Route exact path="/catalogue/:CategoryID">  
+                    <ProductsPage/>
+                </Route>
+                <Route exact path="/catalogue/productDetail/:productID">  
+                    <DetailPage/>
+                </Route>
+                <Route exact path="/SignIn">  
+                    <SignInPage/>
+                </Route>
+                <Route exact path="/SignUp">  
+                    <SignUpPage/>
+                </Route>
+            </Switch>    
         </div>
     )
 }
