@@ -1,10 +1,9 @@
-import React, {useContext} from 'react'
-import {makeStyles, Typography, Container} from '@material-ui/core'
-import HightligthContainer from '../productComponents/HightligthContainer'
+import React, {useContext } from 'react';
+import {makeStyles, Typography, Container, withStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper} from '@material-ui/core'
 import FeaturesComponent from '../decorationComponents/FeaturesComponent'
 import ProductsButtons from '../decorationComponents/ProductsButtons'
-import SignUpButton from '../decorationComponents/SignUpButton'
 import BannerComponent from '../decorationComponents/BannerComponent'
+import CartContainer from '../CartComponents/CartContainer'
 
 const useStyles = makeStyles({
     typography:{
@@ -20,29 +19,25 @@ const useStyles = makeStyles({
 })
 
 const MainPage = () => {
-    const classes = useStyles();
+    const classes = useStyles()
     return (
-        <div>
+        <div> 
             <BannerComponent/>
             <Container>
                 <Typography variant="h4" align="center" className={classes.typography}>
-                    Featured Products
+                    Shopping Cart
                 </Typography>
                 <Typography gutterBottom variant="h3" align="center" className={classes.span}>
                     ____
                 </Typography>
-                <HightligthContainer/>
-                <Typography variant="h2" align="center" className={classes.typography}>
-                    What can I find in Beathouse?
-                </Typography>
+                <CartContainer/>
                 <Typography gutterBottom variant="h3" align="center" className={classes.span}>
                     _______
                 </Typography>
-                <FeaturesComponent/>
                 <ProductsButtons/> 
-                <SignUpButton/>
+                <FeaturesComponent/>
             </Container>
         </div>  
-    )
+    );
 }
 export default MainPage

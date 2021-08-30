@@ -1,14 +1,10 @@
 import React from 'react'
-import NavBar from './NavBar'
+import NavBar from './navegation/NavBar'
 
-
-
-const Header = () => {
+export default function Header() {
     return (
         <div>
             <NavBar/>
         </div>
     )
 }
-
-export default Header

@@ -1,39 +1,35 @@
-import React, {useEffect, useState} from "react";
-import {useLocation, useHistory} from "react-router-dom";
+import React, {useEffect, useState} from 'react'
+import {useLocation, useHistory} from 'react-router-dom'
 
 export const AuthContext = React.createContext();
 
 function AuthProvider({children}) {
-    const [user, setUser] = useState("");
-    const [log, setLog] = useState(false);
-    const location = useLocation();
-    const history = useHistory();
+    const [user, setUser] = useState('')
+    const [logged, setLogged] = useState(false)
+    const location = useLocation()
 
     useEffect(() => {
-        fetch("http://localhost:8080/session/login", {
+        fetch('http://localhost:8080/session/login', {
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
-            credentials: "include",
+            credentials: 'include',
         })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.passport){
-                    console.log("DATA que viene del useEffect del context=",data)
-                    setUser(data.passport.user) 
-                    setLog(true) 
-                }else{
-                    history.push('/')
-                }
-                
-            })
-            .catch((err) => console.log(err));
-    },[location.pathname]);
+        .then((response) => response.json())
+        .then((data) => {
+            //console.log("DATA que viene del useEffect del context=",data)
+            setUser(data)
+            setLogged(true)               
+        })
+        .catch((err) =>{
+            console.log('error desde AuthContext',err)
+        })             
+    }, [location.pathname])
 
     return (
-        <AuthContext.Provider value={{user, log, setLog}}>
+        <AuthContext.Provider value={{user, setUser, logged, setLogged}}>
             {children}
         </AuthContext.Provider>
-    );
+    )
 }
-export default AuthProvider;
+export default AuthProvider
