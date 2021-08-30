@@ -3,7 +3,7 @@ faker.locale = 'es'
 
 const getFakeProducts = () => ({
     nomre: faker.name.firstName(),
-    precio: faker.finance.amount() ,
+    precio: faker.finance.amount(),
     foto: faker.image.imageUrl(),
 })
 
