@@ -42,18 +42,25 @@ module.exports = {
 
     mostrarProductos: async (req, res) => {
         if(!req.session.passport) return res.status(400).send('debe iniciar sesion para usar el carrito')
+        try {
             const userInfo = await DAO.findUser(req.session.passport.user._id) // info del user
             const products = await DAO.listarProductos()//productos del listado
-        if(!userInfo.cart.length > 0){ 
-            return res.status(400).send('el cart esta vacio')
-        }
-        const cartProducts = userInfo.cart.map(cartProduct => {
-            return {
-                producto: products.find(p => p._id.toString() === cartProduct.product.id),
-                cantidad: cartProduct.cantidad,
+            if(!userInfo.cart.length > 0){ 
+                return res.status(200).json([])
             }
-        })
-        return res.status(200).json(cartProducts)     
+            const cartProducts = userInfo.cart.map(cartProduct => {
+                return {
+                    producto: products.find(p => p._id.toString() === cartProduct.product.id),
+                    cantidad: cartProduct.cantidad,
+                }
+            })
+            cartProducts.sort((a, b) => a.producto.timestamp.localeCompare(b.producto.timestamp))
+
+            return res.status(200).json(cartProducts)     
+            
+        }catch (error) {
+            return res.status(400).send(error)
+        }
     },
 
     borrarProductoId: async (req, res) => {
@@ -87,8 +94,24 @@ module.exports = {
     finalizarCompra: async (req, res) => {
         if(!req.session.passport) return res.status(400).send('debe iniciar sesion para usar el carrito')
         try {
-            const userInfo = await DAO.findUser(req.session.passport.user._id) // info del user      
+            const userInfo = await DAO.findUser(req.session.passport.user._id) // info del user  
+            console.log(userInfo) 
+            const productsName = userInfo.cart.map(p => p.product )  
+            console.log("nombres", productsName)
+            return res.status(200).json(productsName)   
         }catch (error) { 
+        }  
+    },
+
+    totalProductosEnCart: async (req, res) => {
+        if(!req.session.passport) return res.status(400).send('debe iniciar sesion para usar el carrito')
+        try {
+            const userInfo = await DAO.findUser(req.session.passport.user._id) // info del user
+            const cartQuantity = userInfo.cart
+            const quantity = cartQuantity.reduce((sum, p) => sum + p.cantidad, 0)
+            return res.status(200).json(quantity)   
+        }catch (error) { 
+            return res.status(400).send(error)
         }  
     },
 }

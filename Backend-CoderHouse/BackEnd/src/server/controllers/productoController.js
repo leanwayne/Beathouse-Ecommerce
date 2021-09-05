@@ -103,25 +103,26 @@ module.exports = {
     actualizarProductoPorId: async (req, res) => {
         let productOriginal
         try {
-            productOriginal = await DAO.obtenerProductoPorId(null, req.query.id)
+            productOriginal = await DAO.obtenerProductoPorId(req.query.id)
         }catch (error) {
             return res.status(400).send('Id incorrecto')
         }
-        let base64 = productOriginal[0].fotoUrl
+        console.log("producto", productOriginal.color)
+        let base64 = productOriginal.fotoUrl
         if(req.file){
             const bitmap = fs.readFileSync(`./archivos/${req.file.originalname}`)
             base64 = new Buffer.from(bitmap).toString('base64')
         }
         let product = {
-            nombre: req.body.nombre || productOriginal[0].nombre,
-            descripcion: req.body.descripcion || productOriginal[0].descripcion,
-            productoID: req.body.productoID || productOriginal[0].productoID,
-            marca: req.body.marca || productOriginal[0].marca,
-            precio: req.body.precio || productOriginal[0].precio,
-            fotoUrl: base64 || productOriginal[0].fotoUrl,
-            color: req.body.color || productOriginal[0].color,
-            stock: req.body.stock || productOriginal[0].stock,
-            codigoP: req.body.codigoP || productOriginal[0].codigoP,
+            nombre: req.body.nombre || productOriginal.nombre,
+            descripcion: req.body.descripcion || productOriginal.descripcion,
+            productoID: req.body.productoID || productOriginal.productoID,
+            marca: req.body.marca || productOriginal.marca,
+            precio: req.body.precio || productOriginal.precio,
+            fotoUrl: base64 || productOriginal.fotoUrl,
+            color: req.body.color || productOriginal.color,
+            stock: req.body.stock || productOriginal.stock,
+            codigoP: req.body.codigoP || productOriginal.codigoP,
             timestamp: moment().format('DD/MM/YYYY HH:MM:SS'),
         };
         if(process.env.db === 'MongoDb' || process.env.db === 'MongoAtlas'){
