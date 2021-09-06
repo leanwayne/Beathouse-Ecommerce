@@ -45,7 +45,8 @@ passport.use('register',new LocalStrategy({passReqToCallback: true}, async funct
         let user = {};
         user.username = username
         user.email = req.body.email
-        user.cart = []      
+        user.cart = []
+        user.buyOrders = []     
         try {
             const reg = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/).test(user.email)
             if(reg){

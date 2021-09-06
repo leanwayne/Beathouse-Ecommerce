@@ -31,6 +31,7 @@ const usuariosSchema = new mongoose.Schema({
     email: {type: String, require: true},
     password: {type: String, require: true},
     cart: {type: Array, require: true},
+    buyOrders: {type: Array, require: true},
 });
 const usuarios = new mongoose.model(usuarioCollection, usuariosSchema)
 //----------------------------------------------------------------------------------------------------------
@@ -42,6 +43,7 @@ const usuariosFacebookSchema = new mongoose.Schema({
     photo: {type: String, require: true},
     accessToken: {type: String, require:true},
     cart: {type: Array, require: true},
+    buyOrders: {type: Array, require: true},
 });
 const usuariosfacebook = new mongoose.model(usuarioFacebookCollection, usuariosFacebookSchema); 
 //----------------------------------------------------------------------------------------------------------

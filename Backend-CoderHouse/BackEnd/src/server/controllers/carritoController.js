@@ -1,4 +1,6 @@
 const DAO = require('../models/cartDAO')
+const DAOProduct = require('../models/productsDAO')
+const moment = require('moment')
 
 module.exports = {
     agregarProducto: async (req, res) => {
@@ -8,6 +10,7 @@ module.exports = {
             const reqProduct = {
                 product:{
                     codigoP: req.body.product.codigoP,
+                    nombre:req.body.product.nombre,
                     id: req.body.product.id,
                     color: req.body.product.color,
                     stock: req.body.product.stock,
@@ -74,7 +77,7 @@ module.exports = {
             return res.status(400).send(error)
         }
     },
-
+    
     modificarCantidad: async (req, res) => {
         if(!req.session.passport) return res.status(400).send('debe iniciar sesion para usar el carrito')
         try {
@@ -94,12 +97,51 @@ module.exports = {
     finalizarCompra: async (req, res) => {
         if(!req.session.passport) return res.status(400).send('debe iniciar sesion para usar el carrito')
         try {
-            const userInfo = await DAO.findUser(req.session.passport.user._id) // info del user  
-            console.log(userInfo) 
-            const productsName = userInfo.cart.map(p => p.product )  
-            console.log("nombres", productsName)
-            return res.status(200).json(productsName)   
+            const userInfo = await DAO.findUser(req.session.passport.user._id)
+            const products = await DAO.listarProductos()
+            let ordersList = userInfo.buyOrders
+            let stockInsuficiente = []
+            const cartProducts = userInfo.cart.map(cartProduct => {
+                if(cartProduct.cantidad <= products.find(p => p._id.toString() === cartProduct.product.id).stock){
+                    return true
+                }else{
+                    stockInsuficiente.push(cartProduct)
+                    return false
+                }
+            })
+            const verificarStock = arr => arr.every(v => v === true)
+            if(verificarStock(cartProducts)){
+                const orderCode = (Math.random() + 1).toString(36).substring(7)
+                userInfo.cart.forEach( async p => {
+                    const productOriginal = await DAOProduct.obtenerProductoPorId(p.product.id)
+                    const product = {
+                        nombre: productOriginal.nombre,
+                        descripcion: productOriginal.descripcion,
+                        productoID: productOriginal.productoID,
+                        marca: productOriginal.marca,
+                        precio: productOriginal.precio,
+                        fotoUrl: productOriginal.fotoUrl,
+                        color: productOriginal.color,
+                        stock: productOriginal.stock - p.cantidad,
+                        codigoP: productOriginal.codigoP,
+                        timestamp: productOriginal.timestamp,
+                    }
+                    const order = {
+                        buyer:{name: userInfo.username, phoneNumber: req.body.phoneNumber, email: userInfo.email, orderCode: orderCode},
+                        product:{name: productOriginal.nombre, price: productOriginal.precio, quantity: p.cantidad, photo: productOriginal.fotoUrl },
+                        date: moment().format('DD/MM/YYYY HH:MM:SS')
+                    }
+                    ordersList.push(order)
+                    await DAOProduct.actualizarProductoPorId(p.product.id, product)
+                    await DAO.saveProductInCart(req.session.passport.user._id, []) 
+                    await DAO.saveOrderInCart(req.session.passport.user._id, ordersList)                 
+                })
+                return res.status(200).json({orderCode:orderCode})
+            }else{
+                return res.status(200).json(stockInsuficiente)
+            } 
         }catch (error) { 
+            return error
         }  
     },
 

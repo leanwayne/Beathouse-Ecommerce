@@ -1,4 +1,4 @@
-let moment = require('moment');
+let moment = require('moment')
 const { getFakeProducts } = require('../../utils/fakerMock/productoFaker')
 const fs = require('fs')
 const DAO = require('../models/productsDAO')
@@ -107,7 +107,6 @@ module.exports = {
         }catch (error) {
             return res.status(400).send('Id incorrecto')
         }
-        console.log("producto", productOriginal.color)
         let base64 = productOriginal.fotoUrl
         if(req.file){
             const bitmap = fs.readFileSync(`./archivos/${req.file.originalname}`)
@@ -124,7 +123,7 @@ module.exports = {
             stock: req.body.stock || productOriginal.stock,
             codigoP: req.body.codigoP || productOriginal.codigoP,
             timestamp: moment().format('DD/MM/YYYY HH:MM:SS'),
-        };
+        }
         if(process.env.db === 'MongoDb' || process.env.db === 'MongoAtlas'){
             try {
                 info = await DAO.actualizarProductoPorId(req.query.id, product)
