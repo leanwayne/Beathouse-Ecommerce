@@ -10,14 +10,16 @@ require('../optionsMongo/mongoOptions')
 const passport = require('passport')
 require('../passport/passport')
 const http = require('http').createServer(app)
-const PORT = process.env.PORT
-const cors = require('cors')
+const PORT = process.env.PORT || 8080
+//const cors = require('cors')
 const path = require('path')
-const rutaProductos = require('./routes/productosRouter')
-const rutaCarrito = require('./routes/carritoRouter')
-const rutaSession = require('./routes/sessionRouter')
-const rutaCarousel = require('./routes/carouselRouter')
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
+
+const productsRoute = require('./routes/productsRouter')
+const cartRoute = require('./routes/cartRouter')
+const sessionRoute = require('./routes/sessionRouter')
+const carouselRoute = require('./routes/carouselRouter')
+
+//app.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 app.use(cookieParser())
 
 //Session Setup
@@ -26,7 +28,7 @@ app.use(
         store: MongoStore.create({
             mongoUrl: config.MONGOATLAS,
             mongoOptions: advancedOptions,
-            ttl: 10000,
+            ttl: 500,
             collectionName: 'sessions',
         }),
         secret: 'shhh',
@@ -34,18 +36,27 @@ app.use(
         saveUninitialized: false,
         rolling: true,
     })
-);
+)
 //-----------------------
+
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(compression())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use('/cart', rutaCarrito)
-app.use('/productos', rutaProductos)
-app.use('/session', rutaSession)
-app.use('/carousel', rutaCarousel)
+
+app.use(express.static(path.join(__dirname, 'build')))
+
+app.use('/cart', cartRoute)
+app.use('/products', productsRoute)
+app.use('/session', sessionRoute)
+app.use('/carousel', carouselRoute)
+
+//app.get('/*', function (req, res) {
+//    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//})
+
 
 http.listen(PORT, () => {
-  console.log(`Server en puerto ${PORT}`)
-});
+    console.log(`Server on port ${PORT}`)
+})

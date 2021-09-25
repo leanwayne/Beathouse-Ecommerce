@@ -1,32 +1,32 @@
 const model = require('./modelSchema')
 
 module.exports = {
-    agregarProducto: async (product) => await model.productos.insertMany(product),
+    addProduct: async (product) => await model.products.insertMany(product),
     
-    listarProductos: async () => {
-        const data = await model.productos.find({}).sort({nombre: 1});
+    listProducts: async () => {
+        const data = await model.products.find({}).sort({timeStamp: 1});
         return data
     },
 
-    obtenerProductoPorId: async (_id) => {
-        const data = await model.productos.findOne({$or:[
+    findProductById: async (_id) => {
+        const data = await model.products.findOne({$or:[
             {_id: _id}
         ]});
         return data
     },
 
-    obtenerProductoPorCodigo: async (codigoP) => {
-        const data = await model.productos.find({$or:[
-            {codigoP: codigoP}
+    findProductByCode: async (productCode) => {
+        const data = await model.products.find({$or:[
+            {productCode: productCode}
         ]});
         return data
     },
 
-    obtenerProductosPorCategoria: async (productoID) => {
-        const data = await model.productos.find({$or:[
-            {productoID: productoID}
+    findProductsByCategory: async (productId) => {
+        const data = await model.products.find({$or:[
+            {productId: productId}
         ]});
-        const groupBy = (key,arr) => arr
+        const groupBy = (key, arr) => arr
             .reduce(
                 (cache, product) => {
                     const property = product[key]
@@ -36,18 +36,17 @@ module.exports = {
                   return {...cache, [property]: [product]}
                 },{}
             )
-        const dataArray = Object.values(groupBy('codigoP', data)).map(p => p[0])
+        const dataArray = Object.values(groupBy('productCode', data)).map(p => p[0])
         return dataArray
     },
 
-    actualizarProductoPorId: async (_id, product) => {
-         const info = await model.productos.updateOne({ _id: _id }, {$set: product})
+    updateProductById: async (_id, product) => {
+         const info = await model.products.updateOne({ _id: _id }, {$set: product})
         return info
     },
 
-    borrarProductoPorId: async (_id) => {
-        const info = await model.productos.deleteOne({_id: _id});
+    deleteProductById: async (_id) => {
+        const info = await model.products.deleteOne({_id: _id});
         return info
-    },
-         
+    },        
 }

@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.js": "/static/js/main.dc9b65d7.chunk.js",
+    "main.js.map": "/static/js/main.dc9b65d7.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.0733fe2d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.0733fe2d.js.map",
+    "static/js/2.f05efa6e.chunk.js": "/static/js/2.f05efa6e.chunk.js",
+    "static/js/2.f05efa6e.chunk.js.map": "/static/js/2.f05efa6e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/js/2.f05efa6e.chunk.js.LICENSE.txt": "/static/js/2.f05efa6e.chunk.js.LICENSE.txt",
+    "static/media/beatHouseLogo.5d131f7c.jpg": "/static/media/beatHouseLogo.5d131f7c.jpg",
+    "static/media/earbuds.6f6437c3.png": "/static/media/earbuds.6f6437c3.png",
+    "static/media/headphones.090a0b01.png": "/static/media/headphones.090a0b01.png",
+    "static/media/headphones_audio_sound_122152_2560x1440.ff04f96a.jpg": "/static/media/headphones_audio_sound_122152_2560x1440.ff04f96a.jpg",
+    "static/media/headphones_bw.bfa4d976.jpg": "/static/media/headphones_bw.bfa4d976.jpg",
+    "static/media/headphones_table.a92f17a4.jpg": "/static/media/headphones_table.a92f17a4.jpg",
+    "static/media/man-earbuds.369c76d9.jpeg": "/static/media/man-earbuds.369c76d9.jpeg",
+    "static/media/man-headphones.61ad28c4.jpg": "/static/media/man-headphones.61ad28c4.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0733fe2d.js",
+    "static/js/2.f05efa6e.chunk.js",
+    "static/js/main.dc9b65d7.chunk.js"
+  ]
+}

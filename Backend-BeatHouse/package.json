@@ -43,8 +43,8 @@
     "request": "^2.88.2"
   },
   "scripts": {
-    "start": "cross-env process.env.db=MongoAtlas nodemon ./src/server/server.js",
-    "dev": "nodemon server.js",
+    "start": "cross-env process.env.db=MongoAtlas node ./src/server/server.js",
+    "dev": "cross-env process.env.db=MongoAtlas nodemon ./src/server/server.js",
     "startMongodb": "cross-env process.env.db=MongoDb nodemon server.js",
     "startMongoAtlas": "cross-env process.env.db=MongoAtlas nodemon server.js",
     "prod": "forever start server.js",

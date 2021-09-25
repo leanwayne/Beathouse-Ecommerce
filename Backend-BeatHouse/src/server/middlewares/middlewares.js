@@ -1,10 +1,8 @@
-function verificar(req, res, next) {
+function verify(req, res, next) {
     if (!req.session.passport) {
-        res.json({ error: "debe iniciar sesion para utilizar esta ruta"})
+        res.send('log in to use this path')
     }else {
         next()
     }
 }
-
-module.exports = {verificar}
-  
+module.exports = {verify}
